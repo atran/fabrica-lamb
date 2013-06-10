@@ -1,0 +1,13 @@
+{
+    "name": "Lamb",
+    "version": "0.0.0",
+    "description": "Location-based, user-generated audio mosaic.",
+    "dependencies": {
+        "socket.io": "latest",
+        "express": "latest",
+        "node-watch": "latest",
+        "fluent-ffmpeg": "latest",
+        "jade": "latest"
+    },
+    "author": "Anthony Tran"
+}
