@@ -2,5 +2,11 @@ extends layout
 
 block content
   h1= title
-  input(class='video-upload', type='file', accept='video/*', name='image_file')
+  form(id='locative-audio', method='post', action='/api/videos', enctype='multipart/form-data')
+    input.video-upload(type='file', accept='video/*', name='image_file')
+    input.lat(type='text', name='lat')
+    input.lng(type='text', name='lng')
+    input#upload-me(type='submit', value='upload')
+    
+  
   script(type='text/javascript', src='/js/uploader.js')
