@@ -2,3 +2,12 @@
 input.hidden {
   display: none !important;
 }
+
+/* line 4, ../../preprocessors/sass/globals.scss */
+a {
+  color: white;
+}
+/* line 6, ../../preprocessors/sass/globals.scss */
+a:hover {
+  color: white;
+}

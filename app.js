@@ -48,16 +48,22 @@ app.configure(function(){
 /**
 * routes
 */
+
 app.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
+// Record routes
 app.get('/record', function(req, res) {
   res.render('recorder');
 });
 
-app.get('/listen', function(req, res) {
-  res.render('player');
+app.get('/saved', function(req, res) {
+  res.render('saved');
+});
+
+app.get('/error', function(req, res) {
+  res.render('error');
 });
 
 app.post('/api/videos', function(req, res) {
@@ -67,8 +73,10 @@ app.post('/api/videos', function(req, res) {
 
   // TODO: have to implement temporary file deletion
   fs.rename(tmp_path, target_path, function(err) {
-    fs.unlink(tmp_path, function(err){ 
-      convert_to_audio(target_path, new_wav_name);
+    if (err) { handle_error(res, err); }
+    fs.unlink(tmp_path, function(err){
+      // if (err) { handle_error(res, err); }
+      convert_to_audio(target_path, new_wav_name, res); 
     });
   });
 
@@ -83,14 +91,27 @@ app.post('/api/videos', function(req, res) {
   });
 
   audiopt.save(function(err, pt) {
-    if (err) {
-      console.log('could not save to db');
-      console.log(err);
-    } else {
-      console.log(pt);
-    }
+    if (err) { handle_error(res, err); }
   })
 })
+
+
+// Listen routes
+app.get('/listen', function(req, res) {
+  res.render('player');
+});
+
+app.get('/api/audiopts', function(req, res) {
+  console.log(req.query);
+
+  AudioPt.find( 
+    {}, 
+    function(err, docs) {
+      res.json(docs);
+    }
+  );
+})
+
 
 
 /**
@@ -104,32 +125,18 @@ io.sockets.on('connection', function(socket) {
 /**
 * helpers
 */
+
+var handle_error = function(res, err) {
+  console.log(err);
+  return res.redirect('/error');            
+}
+
 // convert to wav
-var convert_to_audio = function(path, filename) {
+var convert_to_audio = function(path, filename, res) {
   var proc = new ffmpeg({ source: path })
   .toFormat('wav')
   .saveToFile('public/audio/' + filename, function(stdout, stderr){
     console.log('saved as ' + filename);
+    res.redirect('/saved');            
   });
 }
-
-// get km distance between two points
-function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = deg2rad(lat2-lat1);  // deg2rad below
-  var dLon = deg2rad(lon2-lon1); 
-  var a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2)
-    ; 
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  var d = R * c; // Distance in km
-  return d;
-}
-
-function deg2rad(deg) {
-  return deg * (Math.PI/180)
-}
-
-

@@ -555,6 +555,15 @@ input.hidden {
   display: none !important;
 }
 
+/* line 4, ../../preprocessors/sass/globals.scss */
+a {
+  color: white;
+}
+/* line 6, ../../preprocessors/sass/globals.scss */
+a:hover {
+  color: white;
+}
+
 /* line 1, ../../preprocessors/sass/layout.scss */
 body {
   background-color: #1abc9c;
@@ -573,7 +582,6 @@ body {
 /* line 10, ../../preprocessors/sass/pages/index.scss */
 #index h6 > a {
   display: block;
-  color: white;
   margin: 10px 0;
 }
 

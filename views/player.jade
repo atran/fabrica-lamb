@@ -1,4 +1,16 @@
 extends layout
 
 block content
-  
+  script.
+    $(function(){
+      var search = {
+        loc: [0, 0],
+        radius: 123,
+        tags: [ 'nyc' ]
+      };
+
+      $.get('/api/audiopts', search, function(data){
+        console.log(data);
+      });
+
+    });

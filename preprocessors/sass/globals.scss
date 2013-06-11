@@ -1,3 +1,9 @@
 input.hidden {
   display: none !important;
 }
+a {
+  color: white;
+  &:hover {
+    color: white;
+  }
+}
