@@ -3,10 +3,11 @@
     "version": "0.0.0",
     "description": "Location-based, user-generated audio mosaic.",
     "dependencies": {
+        "mongoose": "latest",
         "socket.io": "latest",
         "express": "latest",
         "fluent-ffmpeg": "latest",
-        "jade": "latest"
+        "jade": "latest",
     },
     "author": "Anthony Tran"
 }

@@ -1,12 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  form(id='locative-audio', method='post', action='/api/videos', enctype='multipart/form-data')
-    input.video-upload(type='file', accept='video/*', name='video_file')
-    input.lat(type='text', name='lat')
-    input.lng(type='text', name='lng')
-    input#upload-me(type='submit', value='upload')
-    
-  
+  .wrapper
+    .pagewidth
+      h1= title
+      form(id='locative-audio', method='post', action='/api/videos', enctype='multipart/form-data')
+        input.video-upload(type='file', accept='video/*', name='video_file')
+        input.lat(type='text', name='lat')
+        input.lng(type='text', name='lng')
+        input.name(type='text', name='name')
+        input.tags(type='text', name='tags')
+        input#upload-me(type='submit', value='upload')
+
+
   script(type='text/javascript', src='/js/uploader.js')
