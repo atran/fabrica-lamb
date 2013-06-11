@@ -18,7 +18,7 @@ block content
       .step#metadata
         h3 3. Add some information
           span.fui-checkmark-16.hidden        
-        form(id='locative-audio', method='post', action='/api/videos', enctype='multipart/form-data')
+        form(id='locative-audio', method='post', action='/api/audiopts', enctype='multipart/form-data')
           input.video-upload(type='file', accept='video/*', name='video_file')
           input.lat.hidden(type='text', name='lat')
           input.lng.hidden(type='text', name='lng')

@@ -66,7 +66,7 @@ app.get('/error', function(req, res) {
   res.render('error');
 });
 
-app.post('/api/videos', function(req, res) {
+app.post('/api/audiopts', function(req, res) {
   var tmp_path = req.files.video_file.path,
       target_path = 'tmp/' + req.files.video_file.name,
       new_wav_name = 'au' + crypto.randomBytes(4).readUInt32LE(0) + '.wav';
