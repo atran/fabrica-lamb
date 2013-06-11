@@ -17,4 +17,5 @@ node_modules
 /public/audio/*
 /tmp/*
 
+.sass-cache/*
 .sass-cache/

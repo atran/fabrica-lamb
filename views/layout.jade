@@ -12,7 +12,10 @@ html
     script(src='/socket.io/socket.io.js')
   body
     block content
+
     script(src='/js/vendor/fastclick.js')
-    script(type='text/javascript')
-      $(function(){FastClick.attach(document.body)});
-        
+    script(type='text/javascript').
+      $(function(){
+        FastClick.attach(document.body);
+        setTimeout(function(){window.scrollTo(0,1)},1000);
+      });      

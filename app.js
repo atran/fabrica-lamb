@@ -41,16 +41,6 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.static(__dirname + '/public'));
-
-  app.use(sass.middleware({
-    src: __dirname + '/preprocessors/sass'
-  , dest: __dirname + '/public/css'
-  , debug: true
-  , error: function(e){
-    console.log(e);
-  }
-  }));
-
   io.set('log level', 1);
 });
 
@@ -60,6 +50,14 @@ app.configure(function(){
 */
 app.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
+});
+
+app.get('/record', function(req, res) {
+  res.render('recorder');
+});
+
+app.get('/listen', function(req, res) {
+  res.render('player');
 });
 
 app.post('/api/videos', function(req, res) {
@@ -81,7 +79,7 @@ app.post('/api/videos', function(req, res) {
     loc:        [ parseFloat(req.body.lng),
                   parseFloat(req.body.lat) ],
     sound_url:  new_wav_name,
-    tags:       [ 'tran', 'whatever' ]
+    tags:       req.body.tags.split(',') 
   });
 
   audiopt.save(function(err, pt) {

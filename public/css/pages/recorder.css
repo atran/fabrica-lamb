@@ -1,0 +1,76 @@
+/* line 1, ../../../preprocessors/sass/pages/recorder.scss */
+#recorder h1 {
+  margin-bottom: 30px;
+}
+
+/* line 5, ../../../preprocessors/sass/pages/recorder.scss */
+#gmap {
+  width: 100%;
+  height: 200px;
+  margin: 20px 0;
+}
+
+/* line 11, ../../../preprocessors/sass/pages/recorder.scss */
+.step h3 span {
+  float: right;
+}
+
+/* line 15, ../../../preprocessors/sass/pages/recorder.scss */
+#metadata {
+  position: relative;
+}
+
+/* line 18, ../../../preprocessors/sass/pages/recorder.scss */
+.video-upload {
+  position: absolute;
+  top: -61px;
+  width: 100px !important;
+  height: 51px !important;
+}
+
+/* line 25, ../../../preprocessors/sass/pages/recorder.scss */
+#record-me button {
+  z-index: 10001;
+  pointer-events: none;
+}
+
+/* line 33, ../../../preprocessors/sass/pages/recorder.scss */
+input.name,
+input.tags,
+.tagsinput,
+#upload-me {
+  height: auto;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* line 40, ../../../preprocessors/sass/pages/recorder.scss */
+input.name,
+.tagsinput {
+  border: 2px solid white;
+}
+/* line 43, ../../../preprocessors/sass/pages/recorder.scss */
+input.name:active, input.name:focus,
+.tagsinput:active,
+.tagsinput:focus {
+  border-color: #1abc9c;
+  border-color: white;
+}
+
+/* line 49, ../../../preprocessors/sass/pages/recorder.scss */
+#upload-me {
+  margin-top: 40px;
+}
+
+/* line 53, ../../../preprocessors/sass/pages/recorder.scss */
+#upload-me[disabled] {
+  background-color: #eaeded;
+  border-color: transparent;
+  color: #cad2d3;
+  cursor: default;
+}
+
+/* line 61, ../../../preprocessors/sass/pages/recorder.scss */
+.step {
+  margin-top: 10px;
+}

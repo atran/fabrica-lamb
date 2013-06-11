@@ -1,3 +1,11 @@
-body {
-  background-color: #1abc9c;
-}
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+@import 'vendor/ladda';
+
+@import 'globals';
+@import 'layout';
+
+@import 'pages/index';
+@import 'pages/recorder';
+
+
