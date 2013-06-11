@@ -15,7 +15,6 @@
 */
 
 (function($) {
-
 	var delimiter = new Array();
 	var tags_callbacks = new Array();
 	$.fn.doAutosize = function(o){
@@ -37,6 +36,7 @@
 	        isValidWidthChange = (newWidth < currentWidth && newWidth >= minWidth)
 	                             || (newWidth > minWidth && newWidth < maxWidth);
 	
+
 	    // Animate width
 	    if (isValidWidthChange) {
 	        input.width(newWidth);
@@ -291,8 +291,8 @@
 				
 				}
 				// if user types a comma, create a new tag
-				$(data.fake_input).bind('keypress',data,function(event) {
-					if (event.which==event.data.delimiter.charCodeAt(0) || event.which==13 ) {
+				$(data.fake_input).bind('keydown',data,function(event) {
+					if (event.which==188 || event.which==event.data.delimiter.charCodeAt(0) || event.which==13 ) {
 					    event.preventDefault();
 						if( (event.data.minChars <= $(event.data.fake_input).val().length) && (!event.data.maxChars || (event.data.maxChars >= $(event.data.fake_input).val().length)) )
 							$(event.data.real_input).addTag($(event.data.fake_input).val(),{focus:true,unique:(settings.unique)});
