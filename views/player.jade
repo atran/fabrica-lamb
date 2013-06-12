@@ -1,12 +1,39 @@
 extends layout
 
 block content
+  .wrapper
+    .pagewidth
+      h1 Listen
+      .what-do-you-want
+        h3 I want sounds within a&nbsp;
+          select
+            option 1
+            option 10
+            option 100
+            option 1000
+          |&nbsp;km radius with these tags &#8212;
+        input.tags(type='text', name='tags')
+      input.ladda-button.red.full#filter-me(type='submit', value='Find', disabled)
+      
+      ul#point-listing
+
+block extrascripts
+  script(src='/bootstrap/js/bootstrap-select.js')
+  script(src='/js/vendor/soundmanager2.js')
+  script(src='/js/classes/InlinePlayer.js')
+  script(type='text/javascript').
+    soundManager.setup({
+      url: '/js/vendor/sm2-lib',
+      flashVersion: 9,
+      onready: function(){
+        $(document).trigger('sm2-ready');
+      }
+    })
   script(src='/js/vendor/ICanHaz.min.js')
   script(id='listing', type='text/html').
     <li>
     <ul>
-    <li>{{ name }}</li>
-    <li>{{ sound_url }}</li>
+    <li><a href="/audio/{{ sound_url }}">{{name}}</a></li>
     <li>{{ loc.0 }}</li>
     <li>{{ loc.1 }}</li>
     <ul>

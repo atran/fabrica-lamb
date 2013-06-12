@@ -1,3 +1,5 @@
+@import 'compass';
+
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 @import 'vendor/ladda';
@@ -7,5 +9,6 @@
 
 @import 'pages/index';
 @import 'pages/recorder';
+@import 'pages/player';
 
 

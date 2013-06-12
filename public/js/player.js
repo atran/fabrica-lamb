@@ -2,6 +2,11 @@
 (function() {
   $(function() {
     var handleResults, search;
+    $(".tags").tagsInput();
+    $("select").selectpicker({
+      style: 'btn-primary',
+      menuStyle: 'dropdown-inverse'
+    });
     search = {
       loc: [0, 0],
       radius: 123,
@@ -10,10 +15,14 @@
     handleResults = function(audiopts) {
       console.log(audiopts);
       return $(audiopts).each(function(i, el) {
-        return $('body').append(ich.listing(el));
+        return $('#point-listing').append(ich.listing(el));
       });
     };
-    return $.get('/api/audiopts', search, handleResults);
+    $.get('/api/audiopts', search, handleResults);
+    return $(document).on('sm2-ready', function() {
+      var inlinePlayer;
+      return inlinePlayer = new InlinePlayer();
+    });
   });
 
 }).call(this);

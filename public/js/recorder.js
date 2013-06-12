@@ -44,20 +44,20 @@
         map: map
       });
       finder_button.stop();
-      $('#find-me h3 span').removeClass('hidden');
+      $('#find-me h3 span').addClass('active');
       return validator.validate('located', true);
     };
     record_button = Ladda.create($('#record-me button')[0]);
     $('.video-upload').on('change', function(e) {
-      $('#record-me h3 span').removeClass('hidden');
+      $('#record-me h3 span').addClass('active');
       return validator.validate('sounded', true);
     });
     return $('.name').on('keyup', function(e) {
       if ($(this).val().length > 0) {
-        $('#metadata h3 span').removeClass('hidden');
+        $('#metadata h3 span').addClass('active');
         return validator.validate('titled', true);
       } else {
-        $('#metadata h3 span').addClass('hidden');
+        $('#metadata h3 span').removeClass('active');
         return validator.validate('titled', false);
       }
     });

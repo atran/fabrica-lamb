@@ -51,21 +51,21 @@ $ ->
     })
     
     finder_button.stop()
-    $('#find-me h3 span').removeClass 'hidden'
+    $('#find-me h3 span').addClass 'active' 
     validator.validate 'located', true
     
   ## Audio recorder
   record_button = Ladda.create( $('#record-me button')[0] )
 
   $('.video-upload').on 'change', (e) ->
-    $('#record-me h3 span').removeClass 'hidden'
+    $('#record-me h3 span').addClass 'active'
     validator.validate 'sounded', true
 
   ## Metadata
   $('.name').on 'keyup', (e) ->
     if ( $(this).val().length > 0 )
-      $('#metadata h3 span').removeClass 'hidden'
+      $('#metadata h3 span').addClass 'active'
       validator.validate 'titled', true
     else
-      $('#metadata h3 span').addClass 'hidden'
+      $('#metadata h3 span').removeClass 'active'
       validator.validate 'titled', false

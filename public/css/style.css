@@ -1,4 +1,4 @@
-/* line 1, ../../preprocessors/sass/style.scss */
+/* line 3, ../../preprocessors/sass/style.scss */
 * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -556,12 +556,40 @@ input.hidden {
 }
 
 /* line 4, ../../preprocessors/sass/globals.scss */
+textarea, input, .select {
+  outline: none !important;
+}
+
+/* line 7, ../../preprocessors/sass/globals.scss */
 a {
   color: white;
 }
-/* line 6, ../../preprocessors/sass/globals.scss */
+/* line 9, ../../preprocessors/sass/globals.scss */
 a:hover {
   color: white;
+}
+
+/* line 17, ../../preprocessors/sass/globals.scss */
+input.name,
+input.tags,
+.tagsinput,
+input.full {
+  height: auto;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* line 24, ../../preprocessors/sass/globals.scss */
+input.name,
+.tagsinput {
+  border: 2px solid white;
+}
+/* line 27, ../../preprocessors/sass/globals.scss */
+input.name:active, input.name:focus,
+.tagsinput:active,
+.tagsinput:focus {
+  border-color: #1abc9c;
+  border-color: white;
 }
 
 /* line 1, ../../preprocessors/sass/layout.scss */
@@ -598,16 +626,39 @@ body {
 }
 
 /* line 11, ../../preprocessors/sass/pages/recorder.scss */
-.step h3 span {
-  float: right;
+.step h3 {
+  position: relative;
 }
 
-/* line 15, ../../preprocessors/sass/pages/recorder.scss */
+/* line 14, ../../preprocessors/sass/pages/recorder.scss */
+.step h3 span {
+  position: absolute;
+  left: 0%;
+  top: 2px;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: all 750ms ease-in-out;
+  -moz-transition: all 750ms ease-in-out;
+  -o-transition: all 750ms ease-in-out;
+  transition: all 750ms ease-in-out;
+  -webkit-transition-delay: 250ms;
+  -moz-transition-delay: 250ms;
+  -o-transition-delay: 250ms;
+  transition-delay: 250ms;
+}
+/* line 21, ../../preprocessors/sass/pages/recorder.scss */
+.step h3 span.active {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  left: 93.5%;
+}
+
+/* line 27, ../../preprocessors/sass/pages/recorder.scss */
 #metadata {
   position: relative;
 }
 
-/* line 18, ../../preprocessors/sass/pages/recorder.scss */
+/* line 30, ../../preprocessors/sass/pages/recorder.scss */
 .video-upload {
   position: absolute;
   top: -61px;
@@ -615,41 +666,18 @@ body {
   height: 51px !important;
 }
 
-/* line 25, ../../preprocessors/sass/pages/recorder.scss */
+/* line 37, ../../preprocessors/sass/pages/recorder.scss */
 #record-me button {
   z-index: 10001;
   pointer-events: none;
 }
 
-/* line 33, ../../preprocessors/sass/pages/recorder.scss */
-input.name,
-input.tags,
-.tagsinput,
-#upload-me {
-  height: auto;
-  width: 100%;
-  max-width: 480px;
-}
-
-/* line 40, ../../preprocessors/sass/pages/recorder.scss */
-input.name,
-.tagsinput {
-  border: 2px solid white;
-}
-/* line 43, ../../preprocessors/sass/pages/recorder.scss */
-input.name:active, input.name:focus,
-.tagsinput:active,
-.tagsinput:focus {
-  border-color: #1abc9c;
-  border-color: white;
-}
-
-/* line 49, ../../preprocessors/sass/pages/recorder.scss */
+/* line 42, ../../preprocessors/sass/pages/recorder.scss */
 #upload-me {
   margin-top: 40px;
 }
 
-/* line 53, ../../preprocessors/sass/pages/recorder.scss */
+/* line 46, ../../preprocessors/sass/pages/recorder.scss */
 #upload-me[disabled] {
   background-color: #eaeded;
   border-color: transparent;
@@ -657,7 +685,60 @@ input.name:active, input.name:focus,
   cursor: default;
 }
 
-/* line 61, ../../preprocessors/sass/pages/recorder.scss */
+/* line 54, ../../preprocessors/sass/pages/recorder.scss */
 .step {
   margin-top: 10px;
+}
+
+/* line 2, ../../preprocessors/sass/pages/player.scss */
+.what-do-you-want .select {
+  vertical-align: 10px;
+}
+/* line 4, ../../preprocessors/sass/pages/player.scss */
+.what-do-you-want .select .dropdown-arrow {
+  border-color: transparent transparent #34495e transparent;
+  right: 3px;
+}
+/* line 8, ../../preprocessors/sass/pages/player.scss */
+.what-do-you-want .select.btn-group.open .dropdown-toggle {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/* line 14, ../../preprocessors/sass/pages/player.scss */
+.what-do-you-want .select.btn-group.open .btn-primary.dropdown-toggle,
+.what-do-you-want .select .dropdown-inverse li.selected > a,
+.what-do-you-want .select .dropdown-menu li > a:hover,
+.what-do-you-want .select .dropdown-menu li.selected > a:hover {
+  color: #fff;
+  background-color: #ea8557;
+}
+/* line 18, ../../preprocessors/sass/pages/player.scss */
+.what-do-you-want .select .btn {
+  padding: 5px 20px 2px 12px;
+  width: 64px;
+  background-color: #ea8557;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+/* line 23, ../../preprocessors/sass/pages/player.scss */
+.what-do-you-want .select .btn:hover {
+  background-color: #ffa96c;
+}
+/* line 26, ../../preprocessors/sass/pages/player.scss */
+.what-do-you-want .select .btn .caret {
+  position: absolute;
+  right: 8px;
+}
+/* line 31, ../../preprocessors/sass/pages/player.scss */
+.what-do-you-want .select .dropdown-menu {
+  min-width: 100px;
+}
+
+/* line 36, ../../preprocessors/sass/pages/player.scss */
+#filter-me {
+  margin-top: 20px;
 }

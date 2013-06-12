@@ -1,0 +1,38 @@
+// Custom select styling
+.what-do-you-want .select {
+  vertical-align: 10px;
+  .dropdown-arrow {
+    border-color: transparent transparent #34495e transparent;
+    right: 3px;
+  }
+  &.btn-group.open .dropdown-toggle {
+    @include box-shadow(none);
+  }
+  &.btn-group.open .btn-primary.dropdown-toggle,
+  .dropdown-inverse li.selected > a,
+  .dropdown-menu li > a:hover,
+  .dropdown-menu li.selected > a:hover {
+    color: #fff;
+    background-color: #ea8557;
+  }
+  .btn {
+    padding: 5px 20px 2px 12px;
+    width: 64px;
+    background-color: #ea8557;
+    @include border-radius(0);
+    &:hover {
+      background-color: #ffa96c;
+    }
+    .caret {
+      position: absolute;
+      right: 8px;
+    }
+  }
+  .dropdown-menu {
+    min-width: 100px;
+  }
+}
+
+#filter-me {
+  margin-top: 20px;
+}

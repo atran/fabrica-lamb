@@ -6,18 +6,18 @@ block content
       h1 Let's get your location and sound.
       .step#find-me
         h3 1. Find me 
-          span.fui-checkmark-16.hidden
+          span.fui-checkmark-16
         button.ladda-button.red.contract
           span.ladda-label Locate
         #gmap.hidden
       .step#record-me
         h3 2. Record a sound
-          span.fui-checkmark-16.hidden        
+          span.fui-checkmark-16        
         button.ladda-button.red.contract 
           span.ladda-label Record
       .step#metadata
-        h3 3. Add some information
-          span.fui-checkmark-16.hidden        
+        h3 3. Description
+          span.fui-checkmark-16        
         form(id='locative-audio', method='post', action='/api/audiopts', enctype='multipart/form-data')
           input.video-upload(type='file', accept='video/*', name='video_file')
           input.lat.hidden(type='text', name='lat')
@@ -26,10 +26,8 @@ block content
           input.name(type='text', name='name')
           h4 Tags
           input.tags(type='text', name='tags')
-          input.ladda-button.red#upload-me(type='submit', value='Upload', disabled)
+          input.ladda-button.red.full#upload-me(type='submit', value='Upload', disabled)
 
-
+block extrascripts
   script(type='text/javascript', src='http://maps.googleapis.com/maps/api/js?sensor=false')
-  script(type='text/javascript', src='/js/vendor/jquery.tagsinput.js')
-  script(type='text/javascript', src='/js/vendor/ladda.js')    
   script(type='text/javascript', src='/js/recorder.js')

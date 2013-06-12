@@ -1,4 +1,11 @@
 $ ->
+  # Init tags & select style
+  $(".tags").tagsInput()
+  $("select").selectpicker(
+    style: 'btn-primary'
+    menuStyle: 'dropdown-inverse'
+  )
+
   search =
     loc: [0,0],
     radius: 123,
@@ -7,7 +14,7 @@ $ ->
   handleResults = (audiopts) ->
     console.log(audiopts)
     $(audiopts).each (i, el) ->
-      $('body').append( ich.listing(el) )
+      $('#point-listing').append( ich.listing(el) )
 
 
   $.get(
@@ -15,4 +22,7 @@ $ ->
     search
     handleResults
   )
+
+  $(document).on 'sm2-ready', ->
+    inlinePlayer = new InlinePlayer()
 

@@ -8,8 +8,20 @@
   margin: 20px 0;
 }
 
+.step h3 {
+  position: relative;
+}
 .step h3 span {
-  float: right;
+  position: absolute;
+  left: 0%;
+  top: 2px;
+  @include opacity(0);
+  @include transition(all 750ms ease-in-out);
+  @include transition-delay(250ms);
+  &.active {
+    @include opacity(1);
+    left: 93.5%;
+  }
 }
 
 #metadata {
@@ -25,25 +37,6 @@
 #record-me button {
   z-index: 10001;
   pointer-events: none;
-}
-
-input.name,
-input.tags,
-.tagsinput,
-#upload-me {
-  height: auto;
-  width: 100%;
-  max-width: 480px;
-}
-
-input.name,
-.tagsinput {
-  border: 2px solid white;  
-  &:active,
-  &:focus {
-    border-color: #1abc9c;
-    border-color: white;
-  }
 }
 
 #upload-me {
