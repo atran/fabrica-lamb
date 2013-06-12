@@ -13,7 +13,7 @@ block content
             option 1000
           |&nbsp;km radius with these tags &#8212;
         input.tags(type='text', name='tags')
-      input.ladda-button.red.full#filter-me(type='submit', value='Find', disabled)
+      input.ladda-button.red.full#filter-me(type='submit', value='Find')
       
       ul#point-listing
 
@@ -29,19 +29,6 @@ block extrascripts
         $(document).trigger('sm2-ready');
       }
     })
+  script(id='listing', src='/js/templates/audiopts_listing.js')  
   script(src='/js/vendor/ICanHaz.min.js')
-  script(id='listing', type='text/html').
-    <li>
-    <ul>
-    <li><a href="/audio/{{ sound_url }}">{{name}}</a></li>
-    <li>{{ loc.0 }}</li>
-    <li>{{ loc.1 }}</li>
-    <ul>
-    <li>tags:</li>
-    {{#tags}}
-    <li>{{ . }}</li>
-    {{/tags}}
-    </ul>
-    </ul>
-    </li>
   script(src='/js/player.js')

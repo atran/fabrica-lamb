@@ -50,7 +50,28 @@ app.configure(function(){
 */
 
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Lamb' });
+});
+
+app.get('/api/templates', function(req, res) {
+  var dir = 'views/partials/';
+  var tmpls = [];
+  fs.readdir(dir, function(err, files) {
+    if (err) {}
+    var c = 0;
+    files.forEach(function(file) {
+      c++;
+      fs.readFile(dir+file, 'utf8', function(err,html) {
+        if (err) {}
+        //strip extension
+        file = file.replace(/\.[^/.]+$/, "");
+        tmpls.push( { name: file, content: html } );
+        if (0 === --c) {
+          res.json(tmpls);
+        }
+      })
+    })
+  })
 });
 
 // Record routes

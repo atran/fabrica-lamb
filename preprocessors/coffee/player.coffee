@@ -5,23 +5,25 @@ $ ->
     style: 'btn-primary'
     menuStyle: 'dropdown-inverse'
   )
-
-  search =
-    loc: [0,0],
-    radius: 123,
-    tags: [ 'nyc' ]
+  # Init templates
+  $.getJSON '/api/templates', (tmpls) ->
+    console.log(tmpls)
+    for tmpl in tmpls
+      ich.addTemplate(tmpl.name, tmpl.content)
 
   handleResults = (audiopts) ->
     console.log(audiopts)
     $(audiopts).each (i, el) ->
-      $('#point-listing').append( ich.listing(el) )
+      $('#point-listing').append( ich.apListing(el) )
 
+  $('#filter-me').on 'click', (e) ->
+    e.preventDefault()
 
-  $.get(
-    '/api/audiopts'
-    search
-    handleResults
-  )
+    $.get(
+      '/api/audiopts'
+      {}
+      handleResults
+    )
 
   $(document).on 'sm2-ready', ->
     inlinePlayer = new InlinePlayer()
