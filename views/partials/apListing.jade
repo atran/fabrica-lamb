@@ -1,0 +1,11 @@
+li
+  ul
+    li
+      a(href="/audio/{{sound_url}}") {{name}}
+    li {{loc.0}}
+    li {{loc.1}}
+    ul
+      li tags
+      | {{#tags}}
+      li {{.}}
+      | {{/tags}}

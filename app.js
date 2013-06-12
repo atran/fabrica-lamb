@@ -9,6 +9,7 @@ var express = require('express')
   , mongoose = require('mongoose')
   , io = require('socket.io').listen(server)
   , fs = require('fs')
+  , jade = require('jade')
   , crypto = require('crypto')
   , ffmpeg = require('fluent-ffmpeg');
 
@@ -61,10 +62,11 @@ app.get('/api/templates', function(req, res) {
     var c = 0;
     files.forEach(function(file) {
       c++;
-      fs.readFile(dir+file, 'utf8', function(err,html) {
+      fs.readFile(dir+file, 'utf8', function(err,jde) {
         if (err) {}
         //strip extension
         file = file.replace(/\.[^/.]+$/, "");
+        var html = jade.compile(jde)();
         tmpls.push( { name: file, content: html } );
         if (0 === --c) {
           res.json(tmpls);
