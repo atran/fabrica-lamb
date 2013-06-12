@@ -9,6 +9,7 @@ var express = require('express')
   , mongoose = require('mongoose')
   , io = require('socket.io').listen(server)
   , fs = require('fs')
+  , _ = require('underscore')
   , jade = require('jade')
   , crypto = require('crypto')
   , ffmpeg = require('fluent-ffmpeg');
@@ -125,30 +126,44 @@ app.get('/listen', function(req, res) {
 });
 
 app.get('/api/audiopts', function(req, res) {
-  CONVERSION_FACTOR_DEG_TO_KM = 111.12;
+  FACTOR_DEG_TO_KM = 6371;
 
-  lat  = req.query.lat;
-  lng  = req.query.lat;
+  var lng     = parseFloat(req.query.lng),
+      lat     = parseFloat(req.query.lat),
+      radius  = parseInt(req.query.radius),
+      tags    = req.query.tags.length > 0
+                ? req.query.tags.split(',')
+                : false
+                ;
 
-  tags = req.query.tags.length > 0
-         ? req.query.tags.split(',')
-         : false
-
-  if (tags) {
-    geo_query = {
-      loc:  { '$near': [ lat, lng ] },
-      tags: { '$in': tags }
-    }
-  } else {
-    geo_query = {
-      loc:  { '$near': [ lat, lng ] }      
+  geo_query = { 
+    loc: { 
+      '$near': [ lng, lat ],
+      '$maxDistance': radius
     }
   }
 
-  AudioPt.find(geo_query, function(err, docs) {
-    res.json(docs);
-  });
+  if (tags) {
+    _.extend( geo_query, { tags: { '$in': tags } } )  
+  }
 
+  // dirty because we want measured distances
+  mongoose.connection.db.executeDbCommand({
+    geoNear: "audiopoints",
+    near: [ lng, lat ],
+    spherical: true,
+    distanceMultiplier: FACTOR_DEG_TO_KM,
+    maxDistance: radius / FACTOR_DEG_TO_KM
+  }, function(err, result){
+    var query_results =
+      _.map(result.documents[0].results, function(el) {
+        var flat = _.flatten(el);
+        var obj = flat[1];
+        _.extend(obj, { dist: flat[0] })
+        return obj
+      });
+    res.json(query_results)
+  })
 })
 
 

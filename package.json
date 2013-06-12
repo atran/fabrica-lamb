@@ -8,6 +8,7 @@
         "express": "latest",
         "fluent-ffmpeg": "latest",
         "jade": "latest",
+        "underscore": "latest"
     },
     "author": "Anthony Tran"
 }
