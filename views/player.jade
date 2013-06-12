@@ -4,13 +4,13 @@ block content
   .wrapper
     .pagewidth
       h1 Listen
-      .what-do-you-want
+      form.what-do-you-want
         h3 I want sounds within a&nbsp;
-          select
-            option 1
-            option 10
-            option 100
-            option 1000
+          select(name='radius')
+            option(value='1') 1
+            option(value='10') 10
+            option(value='100') 100
+            option(value='1000') 1000
           |&nbsp;km radius with these tags &#8212;
         input.tags(type='text', name='tags')
       input.ladda-button.red.full#filter-me(type='submit', value='Find')
@@ -29,6 +29,5 @@ block extrascripts
         $(document).trigger('sm2-ready');
       }
     })
-  script(id='listing', src='/js/templates/audiopts_listing.js')  
   script(src='/js/vendor/ICanHaz.min.js')
   script(src='/js/player.js')

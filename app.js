@@ -125,14 +125,30 @@ app.get('/listen', function(req, res) {
 });
 
 app.get('/api/audiopts', function(req, res) {
-  console.log(req.query);
+  CONVERSION_FACTOR_DEG_TO_KM = 111.12;
 
-  AudioPt.find( 
-    {}, 
-    function(err, docs) {
-      res.json(docs);
+  lat  = req.query.lat;
+  lng  = req.query.lat;
+
+  tags = req.query.tags.length > 0
+         ? req.query.tags.split(',')
+         : false
+
+  if (tags) {
+    geo_query = {
+      loc:  { '$near': [ lat, lng ] },
+      tags: { '$in': tags }
     }
-  );
+  } else {
+    geo_query = {
+      loc:  { '$near': [ lat, lng ] }      
+    }
+  }
+
+  AudioPt.find(geo_query, function(err, docs) {
+    res.json(docs);
+  });
+
 })
 
 
