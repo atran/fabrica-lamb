@@ -11,6 +11,7 @@ $ ->
   svg = d3.select('#map').append('svg')
   mapped_points = []
 
+  # Init map
   $('#map').css(
     position: 'fixed'
     height: $(window).height()
@@ -62,8 +63,6 @@ $ ->
     .promise().done(makeView)
 
   makeView = () ->
-    inlinePlayer = null
-    inlinePlayer = new InlinePlayer()
     initMap()
 
   ## Map helpers
@@ -87,16 +86,19 @@ $ ->
       zIndex: '10001'
     });
 
-    $('#map').css( 
-              'height': 0
-              )
-             .animate( 
-              'height': $(window).height()
-              'opacity' : 1
-              , 500)
+   
+
     $('.what-do-you-want').animate(
         marginTop: '350px'
-      , 1000, 'easeOutElastic')
+      , 1000, 'easeOutElastic', 
+      -> 
+      $('#map').css( 'height': 0 )
+               .animate( 
+                'height': $(window).height()
+                'opacity' : 1
+              , 500
+              )
+      )
 
     addPoints();
 

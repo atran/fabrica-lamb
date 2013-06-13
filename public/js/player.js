@@ -54,9 +54,6 @@
       }).promise().done(makeView);
     };
     makeView = function() {
-      var inlinePlayer;
-      inlinePlayer = null;
-      inlinePlayer = new InlinePlayer();
       return initMap();
     };
     initMap = function() {
@@ -76,15 +73,14 @@
       $('#map').find('svg').css({
         zIndex: '10001'
       });
-      $('#map').css({
+      $('.what-do-you-want').animate({
+        marginTop: '350px'
+      }, 1000, 'easeOutElastic', function() {}, $('#map').css({
         'height': 0
       }).animate({
         'height': $(window).height(),
         'opacity': 1
-      }, 500);
-      $('.what-do-you-want').animate({
-        marginTop: '350px'
-      }, 1000, 'easeOutElastic');
+      }, 500));
       return addPoints();
     };
     addPoints = function() {

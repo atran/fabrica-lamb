@@ -79,15 +79,15 @@ app.get('/api/templates', function(req, res) {
 
 // Record routes
 app.get('/record', function(req, res) {
-  res.render('recorder');
+  res.render('recorder', { title: 'Record'} );
 });
 
 app.get('/saved', function(req, res) {
-  res.render('saved');
+  res.render('saved', { title: 'Saved'} );
 });
 
 app.get('/error', function(req, res) {
-  res.render('error');
+  res.render('error', { title: 'Error'} );
 });
 
 app.post('/api/audiopts', function(req, res) {
@@ -122,7 +122,7 @@ app.post('/api/audiopts', function(req, res) {
 
 // Listen routes
 app.get('/listen', function(req, res) {
-  res.render('player');
+  res.render('player', { title: 'Listen'} );
 });
 
 app.get('/api/audiopts', function(req, res) {
@@ -147,8 +147,6 @@ app.get('/api/audiopts', function(req, res) {
   if (tags) {
     _.extend( geo_query, { query: { tags: { '$in': tags } } } )  
   }
-
-  console.log(geo_query); 
 
   // dirty because we want measured distances
   mongoose.connection.db.executeDbCommand(
