@@ -5,7 +5,16 @@
 (function(e){e.fn.serializeJSON=function(){var t={};jQuery.map(e(this).serializeArray(),function(e,n){t[e["name"]]=e["value"]});return t}})(jQuery)
 ;
   $(function() {
-    var makeView, submitFields, tmplResults;
+    var addPoints, clearPoints, initMap, location, makeView, map, mapped_points, points, submitFields, svg, tmplResults;
+    location = {};
+    points = [];
+    map = null;
+    svg = d3.select('#map').append('svg');
+    mapped_points = [];
+    $('#map').css({
+      position: 'fixed',
+      height: $(window).height()
+    });
     $(".tags").tagsInput();
     $("select").selectpicker({
       style: 'btn-primary',
@@ -22,16 +31,16 @@
     });
     $('#filter-me').on('click', function(e) {
       e.preventDefault();
+      clearPoints();
       return submitFields();
     });
     submitFields = function() {
       var fields;
       fields = $('.what-do-you-want').serializeJSON();
       return navigator.geolocation.getCurrentPosition(function(pos) {
-        var location;
         location = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
+          lat: 45.666901,
+          lng: 12.243039
         };
         $.extend(fields, location);
         return $.get('/api/audiopts', fields, tmplResults);
@@ -39,14 +48,60 @@
     };
     tmplResults = function(audiopts) {
       $('#point-listing').empty();
+      points = audiopts;
       return $(audiopts).each(function(i, el) {
         return $('#point-listing').append(ich.apListing(el));
       }).promise().done(makeView);
     };
-    return makeView = function() {
+    makeView = function() {
       var inlinePlayer;
       inlinePlayer = null;
-      return inlinePlayer = new InlinePlayer();
+      inlinePlayer = new InlinePlayer();
+      return initMap();
+    };
+    initMap = function() {
+      var provider, template;
+      template = 'http://a.tiles.mapbox.com/v3/andtran.map-e74rfs90/{Z}/{X}/{Y}.png';
+      provider = new MM.TemplatedLayer(template);
+      map = new MM.Map('map', provider);
+      map.disableHandler('MouseHandler');
+      map.disableHandler('TouchHandler');
+      map.disableHandler('MouseWheelHandler');
+      map.disableHandler('DoubleClickHandler');
+      map.disableHandler('DragHandler');
+      map.setZoom(14).setCenter({
+        lat: location.lat - .01,
+        lon: location.lng
+      });
+      $('#map').find('svg').css({
+        zIndex: '10001'
+      });
+      $('#map').css({
+        'height': 0
+      }).animate({
+        'height': $(window).height(),
+        'opacity': 1
+      }, 500);
+      $('.what-do-you-want').animate({
+        marginTop: '350px'
+      }, 1000, 'easeOutElastic');
+      return addPoints();
+    };
+    addPoints = function() {
+      var ap, pt, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = points.length; _i < _len; _i++) {
+        pt = points[_i];
+        ap = new AudioPoint(pt, map, svg);
+        _results.push(mapped_points.push(ap));
+      }
+      return _results;
+    };
+    return clearPoints = function() {
+      return $(mapped_points).each(function(i, el) {
+        el.clear();
+        return mapped_points.splice(i, 1);
+      });
     };
   });
 

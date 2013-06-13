@@ -136,25 +136,23 @@ app.get('/api/audiopts', function(req, res) {
                 : false
                 ;
 
-  geo_query = { 
-    loc: { 
-      '$near': [ lng, lat ],
-      '$maxDistance': radius
-    }
-  }
-
-  if (tags) {
-    _.extend( geo_query, { tags: { '$in': tags } } )  
-  }
-
-  // dirty because we want measured distances
-  mongoose.connection.db.executeDbCommand({
+  geo_query = {
     geoNear: "audiopoints",
     near: [ lng, lat ],
     spherical: true,
     distanceMultiplier: FACTOR_DEG_TO_KM,
-    maxDistance: radius / FACTOR_DEG_TO_KM
-  }, function(err, result){
+    maxDistance: radius / FACTOR_DEG_TO_KM,
+  }
+
+  if (tags) {
+    _.extend( geo_query, { query: { tags: { '$in': tags } } } )  
+  }
+
+  console.log(geo_query); 
+
+  // dirty because we want measured distances
+  mongoose.connection.db.executeDbCommand(
+    geo_query, function(err, result){
     var query_results =
       _.map(result.documents[0].results, function(el) {
         var flat = _.flatten(el);
