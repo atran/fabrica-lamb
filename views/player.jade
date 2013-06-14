@@ -10,12 +10,13 @@ block content
         h1 Listen
         h3 I want sounds within a&nbsp;
           select(name='radius')
-            option(value='1') 1
-            option(value='10') 10
-            option(value='100') 100
-            option(value='1000') 1000
-            option(value='10000') 10000
-          |&nbsp;km radius with these tags &#8212;
+            option(value='.01') 10 m
+            option(value='.1') 100 m
+            option(value='.5') 500 m
+            option(value='1') 1 km
+            option(value='10') 10 km
+            option(value='100') 100 km
+          |&nbsp; radius with these tags &#8212;
         input.tags(type='text', name='tags')
         input.ladda-button.red.full#filter-me(type='submit', value='Find')
       

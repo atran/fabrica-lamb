@@ -19,6 +19,8 @@ function AudioPoint(obj, map, overlay) {
 	this.animateInt	= null;
 	this.sm_sound 	= null;
 
+  this.ac_playing = false;
+
 	// methods
 	this.pos = function() {
 		p = map.locationPoint(
@@ -30,10 +32,22 @@ function AudioPoint(obj, map, overlay) {
 
 	this.play = function(vol) {
 		if (context) {
-      var source = context.createBufferSource();
-      source.buffer = self.sm_sound;
-      source.connect(context.destination);
-      source.noteOn(0);
+      source = self.sm_sound;
+
+      if (!context.createGain || context.createGain.type === undefined) {
+        context.createGain = context.createGainNode
+      }
+      var gainNode = context.createGain();
+      source.connect(gainNode);
+      
+      if (!source.start || source.start.type === undefined) {
+        source.start = source.noteOn;
+      }
+      
+      gainNode.connect(context.destination);
+      gainNode.gain.value = vol;
+      source.loop = true;
+      source.start(0);
     } else {
       self.sm_sound.play({
 			  volume: vol
@@ -42,7 +56,10 @@ function AudioPoint(obj, map, overlay) {
 	}
 
   this.stop = function() {
-    self.sm_sound.stop();
+    if (context) {
+    } else {
+      self.sm_sound.stop();
+    }
   }
 
 	// events
@@ -73,13 +90,14 @@ function AudioPoint(obj, map, overlay) {
 	// event handlers
 	this.handleClick = function(e) {
     if (context) {
-      self.play(10);
+      self.play(100);
+      console.log(context.currentTime);
     }
     else {
       if (self.sm_sound.playState === 1) {
         self.stop();
       } else {
-        self.play();
+        self.play(100);
       }
     }
 	}
@@ -168,9 +186,10 @@ function AudioPoint(obj, map, overlay) {
     req.responseType = 'arraybuffer';
     req.onload = function() {
       context.decodeAudioData(req.response, function(buff) {
-        self.sm_sound = buff;
+        self.sm_sound = context.createBufferSource();
+        self.sm_sound.buffer = buff;
         console.log('loaded');
-      }, function(){ alert('error') })
+      }, function(err){ console.log(err) })
     }
     req.send();
   }
