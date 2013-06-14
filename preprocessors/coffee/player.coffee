@@ -130,7 +130,9 @@ $ ->
 
     addPoints()
 
-
+    $('#map div').css(
+      opacity: 0
+    )
 
     setTimeout(animateTransition, 4000)
 

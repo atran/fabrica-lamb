@@ -107,6 +107,9 @@
       g.attr('transform', "translate(" + p.x + "," + p.y + ")");
       g.append("circle").attr('style', 'fill:#000;fill-opacity:1').attr('r', 3);
       addPoints();
+      $('#map div').css({
+        opacity: 0
+      });
       return setTimeout(animateTransition, 4000);
     };
     animateTransition = function() {
