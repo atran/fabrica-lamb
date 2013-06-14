@@ -130,7 +130,7 @@ app.get('/api/audiopts', function(req, res) {
 
   var lng     = parseFloat(req.query.lng),
       lat     = parseFloat(req.query.lat),
-      radius  = parseInt(req.query.radius),
+      radius  = parseFloat(req.query.radius),
       tags    = req.query.tags.length > 0
                 ? req.query.tags.split(',')
                 : false

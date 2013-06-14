@@ -11,6 +11,14 @@ $ ->
   svg = d3.select('#map').append('svg')
   mapped_points = []
 
+  zoomScale =
+    '.01' : 18
+    '.1'  : 17
+    '.5'  : 17
+    '1'   : 15
+    '10'  : 11
+    '100' : 10
+
   # Init map
   $('#map').css(
     position: 'fixed'
@@ -41,7 +49,10 @@ $ ->
   # Play all
   $('#play-all').on 'click', (e) ->
     e.preventDefault()
-    $(mapped_points).each (i, el) -> el.play()
+    $(mapped_points).each (i, el) ->
+      el.play()
+      if (context)
+        el.events.play()
 
 
   ## JSON populates HTML
@@ -51,8 +62,10 @@ $ ->
     navigator.geolocation.getCurrentPosition(
       (pos) ->
         location =
-          lat: 45.666901 #pos.coords.latitude
-          lng: 12.243039 #pos.coords.longitude
+          #lat: 45.666901 
+          lat: pos.coords.latitude
+          #lng: 12.243039 
+          lng: pos.coords.longitude
         $.extend(fields, location)
         $.get(
           '/api/audiopts'
@@ -85,8 +98,10 @@ $ ->
     map.disableHandler('DoubleClickHandler')
     map.disableHandler('DragHandler')
 
-    map.setZoom(14).setCenter
-      lat: location.lat - .01
+    selected = $('[name="radius"]').find('option:selected').val().toString()
+    zoom = zoomScale[selected]
+    map.setZoom(zoom).setCenter
+      lat: location.lat
       lon: location.lng
 
     $('#map').find('svg')     # get overlay
@@ -103,12 +118,19 @@ $ ->
                 padding: 0
               )
 
-   
+
+    p = map.locationPoint(new MM.Location(location.lat, location.lng))
+    g = svg.append('g');
+    g.attr('transform', "translate(" + p.x + "," + p.y + ")")
+    g.append("circle")
+     .attr('style', 'fill:#000;fill-opacity:1')
+     .attr('r', 3)
 
     $('.what-do-you-want').animate(
         marginTop: '350px'
       , 1000, 'easeOutElastic',
       ->
+      $('#play-all').removeClass('hidden')
       $('#map').css( 'height': 0 )
                .animate(
                 'height': $(window).height()

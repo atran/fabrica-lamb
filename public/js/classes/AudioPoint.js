@@ -18,8 +18,10 @@ function AudioPoint(obj, map, overlay) {
 	this.radius   	= 1;
 	this.animateInt	= null;
 	this.sm_sound 	= null;
-
+  this.buff       = null;
+  
   this.ac_playing = false;
+
 
 	// methods
 	this.pos = function() {
@@ -32,6 +34,7 @@ function AudioPoint(obj, map, overlay) {
 
 	this.play = function(vol) {
 		if (context) {
+      self.createBuffSrc();      
       source = self.sm_sound;
 
       if (!context.createGain || context.createGain.type === undefined) {
@@ -40,6 +43,7 @@ function AudioPoint(obj, map, overlay) {
       var gainNode = context.createGain();
       source.connect(gainNode);
       
+      console.log(source.start.type)
       if (!source.start || source.start.type === undefined) {
         source.start = source.noteOn;
       }
@@ -57,6 +61,13 @@ function AudioPoint(obj, map, overlay) {
 
   this.stop = function() {
     if (context) {
+      source = self.sm_sound;
+
+      if (!source.stop || source.stop.type === undefined) {
+        source.stop = source.noteOff;
+      }
+      
+      source.stop(0);
     } else {
       self.sm_sound.stop();
     }
@@ -71,6 +82,7 @@ function AudioPoint(obj, map, overlay) {
         'fill': '#36DBCA',
         'fill-opacity': 1
       });
+      self.ac_playing = true;
     },
 		stop: function() {
   		clearInterval(self.animateInt);      
@@ -81,6 +93,7 @@ function AudioPoint(obj, map, overlay) {
         'fill': '#F00',
         'fill-opacity': 0.3
       })
+      self.ac_playing = false;              
     },
 		pause: function() {},
 		resume: function() {},
@@ -89,9 +102,15 @@ function AudioPoint(obj, map, overlay) {
 
 	// event handlers
 	this.handleClick = function(e) {
+    console.log(self.ac_playing);
     if (context) {
-      self.play(100);
-      console.log(context.currentTime);
+      if (!self.ac_playing) {
+        self.play(10);
+        self.events.play();
+      } else {
+        self.stop();
+        self.events.stop();
+      }
     }
     else {
       if (self.sm_sound.playState === 1) {
@@ -186,12 +205,16 @@ function AudioPoint(obj, map, overlay) {
     req.responseType = 'arraybuffer';
     req.onload = function() {
       context.decodeAudioData(req.response, function(buff) {
-        self.sm_sound = context.createBufferSource();
-        self.sm_sound.buffer = buff;
-        console.log('loaded');
+        self.buff = buff;
+        self.createBuffSrc();
       }, function(err){ console.log(err) })
     }
     req.send();
+  }
+
+  this.createBuffSrc = function() {
+    self.sm_sound = context.createBufferSource();
+    self.sm_sound.buffer = self.buff;    
   }
 
 	this.init();

@@ -5,12 +5,20 @@
 (function(e){e.fn.serializeJSON=function(){var t={};jQuery.map(e(this).serializeArray(),function(e,n){t[e["name"]]=e["value"]});return t}})(jQuery)
 ;
   $(function() {
-    var addPoints, clearPoints, initMap, location, makeView, map, mapped_points, points, submitFields, svg, tmplResults;
+    var addPoints, clearPoints, initMap, location, makeView, map, mapped_points, points, submitFields, svg, tmplResults, zoomScale;
     location = {};
     points = [];
     map = null;
     svg = d3.select('#map').append('svg');
     mapped_points = [];
+    zoomScale = {
+      '.01': 18,
+      '.1': 17,
+      '.5': 17,
+      '1': 15,
+      '10': 11,
+      '100': 10
+    };
     $('#map').css({
       position: 'fixed',
       height: $(window).height()
@@ -37,7 +45,10 @@
     $('#play-all').on('click', function(e) {
       e.preventDefault();
       return $(mapped_points).each(function(i, el) {
-        return el.play();
+        el.play();
+        if (context) {
+          return el.events.play();
+        }
       });
     });
     submitFields = function() {
@@ -45,8 +56,8 @@
       fields = $('.what-do-you-want').serializeJSON();
       return navigator.geolocation.getCurrentPosition(function(pos) {
         location = {
-          lat: 45.666901,
-          lng: 12.243039
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
         };
         $.extend(fields, location);
         return $.get('/api/audiopts', fields, tmplResults);
@@ -63,7 +74,7 @@
       return initMap();
     };
     initMap = function() {
-      var provider, template;
+      var g, p, provider, selected, template, zoom;
       template = 'http://a.tiles.mapbox.com/v3/andtran.map-e74rfs90/{Z}/{X}/{Y}.png';
       provider = new MM.TemplatedLayer(template);
       map = new MM.Map('map', provider);
@@ -72,8 +83,10 @@
       map.disableHandler('MouseWheelHandler');
       map.disableHandler('DoubleClickHandler');
       map.disableHandler('DragHandler');
-      map.setZoom(14).setCenter({
-        lat: location.lat - .01,
+      selected = $('[name="radius"]').find('option:selected').val().toString();
+      zoom = zoomScale[selected];
+      map.setZoom(zoom).setCenter({
+        lat: location.lat,
         lon: location.lng
       });
       $('#map').find('svg').wrap('<div/>').parent().css({
@@ -86,9 +99,13 @@
         margin: 0,
         padding: 0
       });
+      p = map.locationPoint(new MM.Location(location.lat, location.lng));
+      g = svg.append('g');
+      g.attr('transform', "translate(" + p.x + "," + p.y + ")");
+      g.append("circle").attr('style', 'fill:#000;fill-opacity:1').attr('r', 3);
       $('.what-do-you-want').animate({
         marginTop: '350px'
-      }, 1000, 'easeOutElastic', function() {}, $('#map').css({
+      }, 1000, 'easeOutElastic', function() {}, $('#play-all').removeClass('hidden'), $('#map').css({
         'height': 0
       }).animate({
         'height': $(window).height(),
