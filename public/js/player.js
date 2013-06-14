@@ -34,6 +34,12 @@
       clearPoints();
       return submitFields();
     });
+    $('#play-all').on('click', function(e) {
+      e.preventDefault();
+      return $(mapped_points).each(function(i, el) {
+        return el.play();
+      });
+    });
     submitFields = function() {
       var fields;
       fields = $('.what-do-you-want').serializeJSON();
@@ -70,8 +76,15 @@
         lat: location.lat - .01,
         lon: location.lng
       });
-      $('#map').find('svg').css({
-        zIndex: '10001'
+      $('#map').find('svg').wrap('<div/>').parent().css({
+        zIndex: '10001',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        margin: 0,
+        padding: 0
       });
       $('.what-do-you-want').animate({
         marginTop: '350px'

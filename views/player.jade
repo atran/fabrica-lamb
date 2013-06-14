@@ -5,6 +5,8 @@ block content
     .pagewidth
       #map 
       form.what-do-you-want
+        a#play-all(href="#") PLAY ALL
+        input(type='button', onclick='playDummy()', value='init')
         h1 Listen
         h3 I want sounds within a&nbsp;
           select(name='radius')
@@ -21,6 +23,17 @@ block content
 
 block extrascripts
   script(src='/bootstrap/js/bootstrap-select.js')
+  script(type='text/javascript').
+    context = false;
+    $(function(){
+    try {
+      window.AudioContext = window.AudioContext||window.webkitAudioContext
+      context = new AudioContext();
+    }
+    catch (e) {
+    //alert('Web Audio API is not supported in this browser')
+    }
+    });
   script(src='/js/vendor/soundmanager2.js')
   script(src='/js/classes/InlinePlayer.js')
   script(src='/js/classes/AudioPoint.js')

@@ -28,10 +28,43 @@ function AudioPoint(obj, map, overlay) {
 		return { x: p.x, y: p.y }
 	}
 
+	this.play = function(vol) {
+		if (context) {
+      var source = context.createBufferSource();
+      source.buffer = self.sm_sound;
+      source.connect(context.destination);
+      source.noteOn(0);
+    } else {
+      self.sm_sound.play({
+			  volume: vol
+		  });
+    }
+	}
+
+  this.stop = function() {
+    self.sm_sound.stop();
+  }
+
 	// events
 	this.events = {
-		play: function () {},
-		stop: function() {},
+		play: function () {
+      self.animateInt = setInterval(self.animateCircle, 50);
+      $(self.el).find('circle')
+      .css({
+        'fill': '#36DBCA',
+        'fill-opacity': 1
+      });
+    },
+		stop: function() {
+  		clearInterval(self.animateInt);      
+      self.radius = 10; 
+      self.setRadius();   
+      $(self.el).find('circle')
+      .css({
+        'fill': '#F00',
+        'fill-opacity': 0.3
+      })
+    },
 		pause: function() {},
 		resume: function() {},
 		finish: function () {}
@@ -39,9 +72,16 @@ function AudioPoint(obj, map, overlay) {
 
 	// event handlers
 	this.handleClick = function(e) {
-		self.sm_sound.play({
-			volume: 100
-		})
+    if (context) {
+      self.play(10);
+    }
+    else {
+      if (self.sm_sound.playState === 1) {
+        self.stop();
+      } else {
+        self.play();
+      }
+    }
 	}
 
 	this.handleResize = function(e) {
@@ -57,16 +97,21 @@ function AudioPoint(obj, map, overlay) {
 	this.animateCircle = function(){
     	if (self.radius > 10) { self.radius = 1; }
         self.radius = self.radius + .25;
-        self.mappedPt
-        	.selectAll('circle')
-        	.attr('r', self.radius)
-    }
+      self.setRadius()
+  }
 
-    this.refreshPosition = function(){
-    	var p = self.pos();
-    	self.mappedPt
-    		.attr('transform', "translate(" + p.x + "," + p.y + ")");
-    }
+  this.setRadius = function() {
+    self.mappedPt
+        .selectAll('circle')
+        .attr('r', self.radius)
+  }
+
+
+  this.refreshPosition = function(){
+    var p = self.pos();
+    self.mappedPt
+    .attr('transform', "translate(" + p.x + "," + p.y + ")");
+  }
 
 	// initializer
 	this.init = function() {
@@ -97,21 +142,38 @@ function AudioPoint(obj, map, overlay) {
 		g.append("circle")
          .attr('style', "fill: #F00; fill-opacity: 0.3")
          .attr('r', 10);
-
-        self.animateInt = setInterval(self.animateCircle, 50);
 	}
 
-	this.initSound = function() {
-		self.sm_sound = sm.createSound({
-			id: "a"+self.id,
-			url: self.soundURL,
-       		onplay:self.events.play,
-       		onstop:self.events.stop,
-       		onpause:self.events.pause,
-       		onresume:self.events.resume,
-       		onfinish:self.events.finish
-   		});
-	}
+  this.initSound = function() {
+    // If we have AudioContext
+    if (context) {
+      self.contextRequest();
+    } else {
+      // If we don't have AudioContext, let's use SM2
+      self.sm_sound = sm.createSound({
+        id: "a"+self.id,
+        url: self.soundURL,
+        onplay:self.events.play,
+        onstop:self.events.stop,
+        onpause:self.events.pause,
+        onresume:self.events.resume,
+        onfinish:self.events.finish
+      });
+    }
+  }
+
+  this.contextRequest = function() {
+    var req = new XMLHttpRequest();
+    req.open('GET', self.soundURL, true);
+    req.responseType = 'arraybuffer';
+    req.onload = function() {
+      context.decodeAudioData(req.response, function(buff) {
+        self.sm_sound = buff;
+        console.log('loaded');
+      }, function(){ alert('error') })
+    }
+    req.send();
+  }
 
 	this.init();
 }
