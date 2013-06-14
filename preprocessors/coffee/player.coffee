@@ -38,12 +38,15 @@ $ ->
       ich.addTemplate(tmpl.name, tmpl.content)
 
   # Init context
-
+  
+  # Init Loader button
+  filter_button = Ladda.create( $('#filter-me')[0] )
 
   # Filter event
   $('#filter-me').on 'click', (e) ->
     e.preventDefault()
     clearPoints()
+    filter_button.start()
     submitFields()
 
   # Play all
@@ -116,15 +119,22 @@ $ ->
                 height: '100%'
                 margin: 0
                 padding: 0
+                opacity: 0
               )
-
-
     p = map.locationPoint(new MM.Location(location.lat, location.lng))
-    g = svg.append('g');
+    g = svg.append('g')
     g.attr('transform', "translate(" + p.x + "," + p.y + ")")
     g.append("circle")
      .attr('style', 'fill:#000;fill-opacity:1')
      .attr('r', 3)
+
+    addPoints()
+
+
+
+    setTimeout(animateTransition, 4000)
+
+  animateTransition = ->
 
     $('.what-do-you-want').animate(
         marginTop: '350px'
@@ -138,8 +148,12 @@ $ ->
               , 500
               )
       )
+      $('#map div').css(
+        opacity: 1
+      )
+      filter_button.stop()
+      
 
-    addPoints()
 
   addPoints = ->
     for pt in points

@@ -43,7 +43,6 @@ function AudioPoint(obj, map, overlay) {
       var gainNode = context.createGain();
       source.connect(gainNode);
       
-      console.log(source.start.type)
       if (!source.start || source.start.type === undefined) {
         source.start = source.noteOn;
       }
@@ -102,7 +101,6 @@ function AudioPoint(obj, map, overlay) {
 
 	// event handlers
 	this.handleClick = function(e) {
-    console.log(self.ac_playing);
     if (context) {
       if (!self.ac_playing) {
         self.play(10);

@@ -569,22 +569,23 @@ a:hover {
   color: white;
 }
 
-/* line 17, ../../preprocessors/sass/globals.scss */
+/* line 18, ../../preprocessors/sass/globals.scss */
 input.name,
 input.tags,
 .tagsinput,
-input.full {
+input.full,
+button.full {
   height: auto;
   width: 100%;
   max-width: 480px;
 }
 
-/* line 24, ../../preprocessors/sass/globals.scss */
+/* line 25, ../../preprocessors/sass/globals.scss */
 input.name,
 .tagsinput {
   border: 2px solid white;
 }
-/* line 27, ../../preprocessors/sass/globals.scss */
+/* line 28, ../../preprocessors/sass/globals.scss */
 input.name:active, input.name:focus,
 .tagsinput:active,
 .tagsinput:focus {

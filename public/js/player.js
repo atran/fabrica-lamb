@@ -5,7 +5,7 @@
 (function(e){e.fn.serializeJSON=function(){var t={};jQuery.map(e(this).serializeArray(),function(e,n){t[e["name"]]=e["value"]});return t}})(jQuery)
 ;
   $(function() {
-    var addPoints, clearPoints, initMap, location, makeView, map, mapped_points, points, submitFields, svg, tmplResults, zoomScale;
+    var addPoints, animateTransition, clearPoints, filter_button, initMap, location, makeView, map, mapped_points, points, submitFields, svg, tmplResults, zoomScale;
     location = {};
     points = [];
     map = null;
@@ -37,9 +37,11 @@
       }
       return _results;
     });
+    filter_button = Ladda.create($('#filter-me')[0]);
     $('#filter-me').on('click', function(e) {
       e.preventDefault();
       clearPoints();
+      filter_button.start();
       return submitFields();
     });
     $('#play-all').on('click', function(e) {
@@ -97,12 +99,17 @@
         width: '100%',
         height: '100%',
         margin: 0,
-        padding: 0
+        padding: 0,
+        opacity: 0
       });
       p = map.locationPoint(new MM.Location(location.lat, location.lng));
       g = svg.append('g');
       g.attr('transform', "translate(" + p.x + "," + p.y + ")");
       g.append("circle").attr('style', 'fill:#000;fill-opacity:1').attr('r', 3);
+      addPoints();
+      return setTimeout(animateTransition, 4000);
+    };
+    animateTransition = function() {
       $('.what-do-you-want').animate({
         marginTop: '350px'
       }, 1000, 'easeOutElastic', function() {}, $('#play-all').removeClass('hidden'), $('#map').css({
@@ -111,7 +118,10 @@
         'height': $(window).height(),
         'opacity': 1
       }, 500));
-      return addPoints();
+      $('#map div').css({
+        opacity: 1
+      });
+      return filter_button.stop();
     };
     addPoints = function() {
       var ap, pt, _i, _len, _results;

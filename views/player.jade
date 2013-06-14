@@ -17,8 +17,9 @@ block content
             option(value='100') 100 km
           |&nbsp; radius with these tags &#8212;
         input.tags(type='text', name='tags')
-        input.ladda-button.red.full#filter-me(type='submit', value='Find')
-      
+        button.ladda-button.red.full.zoom-out#filter-me
+          span Find
+
       ul#point-listing
 
 block extrascripts
