@@ -43,18 +43,34 @@ module.exports = (grunt) ->
       dist:
         outputStyle: "compressed"
 
+    nodemon:
+      options:
+        file: 'server.js'
+        cwd: __dirname
+        ignoredFiles: ['public/**', 'src/**', 'node_modules/**','.sass-cache/**']
+
+    concurrent:
+      target:
+        tasks: ['nodemon', 'watch']
+        options:
+          logConcurrentOutput: true
+
     watch:
       files: ["src/**/*.*"]
-      tasks: "default"
-
+      tasks: "generate"
+      options:
+        livereload: true
   
   # These plugins provide necessary tasks.
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-concat"
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks "grunt-contrib-compass"
+  grunt.loadNpmTasks "grunt-nodemon"
+  grunt.loadNpmTasks "grunt-concurrent"
   grunt.loadNpmTasks "grunt-contrib-watch"
   
   # Default task.
-  grunt.registerTask "default", ["coffee", "concat", "compass:dev"]
+  grunt.registerTask "default", ["concurrent:target"]
+  grunt.registerTask "generate", ["coffee", "concat", "compass:dev"]
   grunt.registerTask "build", ["coffee", "concat", "compass:dist", "uglify"]
