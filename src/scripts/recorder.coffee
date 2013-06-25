@@ -51,7 +51,7 @@ $ ->
     })
     
     finder_button.stop()
-    $('#find-me h3 span').addClass 'active' 
+    $('#find-me h3 span').addClass 'active'
     validator.validate 'located', true
     
   ## Audio recorder

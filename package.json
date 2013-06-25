@@ -1,14 +1,22 @@
 {
-    "name": "Lamb",
-    "version": "0.0.0",
-    "description": "Location-based, user-generated audio mosaic.",
-    "dependencies": {
-        "mongoose": "latest",
-        "socket.io": "latest",
-        "express": "latest",
-        "fluent-ffmpeg": "latest",
-        "jade": "latest",
-        "underscore": "latest"
-    },
-    "author": "Anthony Tran"
+  "name": "Lamb",
+  "version": "0.0.0",
+  "description": "Location-based, user-generated audio mosaic.",
+  "dependencies": {
+    "mongoose": "latest",
+    "socket.io": "latest",
+    "express": "latest",
+    "fluent-ffmpeg": "latest",
+    "jade": "latest",
+    "underscore": "latest"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-compass": "~0.3.0"
+  },
+  "author": "Anthony Tran"
 }

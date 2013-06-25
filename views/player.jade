@@ -23,30 +23,19 @@ block content
       ul#point-listing
 
 block extrascripts
-  script(src='/bootstrap/js/bootstrap-select.js')
   script(type='text/javascript').
     context = false;
     $(function(){
-    try {
-      window.AudioContext = window.AudioContext||window.webkitAudioContext
-      context = new AudioContext();
-    }
-    catch (e) {
-    //alert('Web Audio API is not supported in this browser')
-    }
+      try {
+        window.AudioContext = window.AudioContext||window.webkitAudioContext
+        context = new AudioContext();
+      }
+      catch (e) {}
     });
-  script(src='/js/vendor/soundmanager2.js')
-  script(src='/js/classes/InlinePlayer.js')
   script(src='/js/classes/AudioPoint.js')
   script(type='text/javascript').
     soundManager.setup({
-      url: '/js/vendor/sm2-lib',
-      flashVersion: 9,
-      onready: function(){
-        $(document).trigger('sm2-ready');
-      }
+      url: '/js/sm2-lib',
+      flashVersion: 9
     })
-  script(src='/js/vendor/ICanHaz.min.js')
-  script(src='/js/vendor/modestmaps.min.js')
-  script(src='/js/vendor/d3.v3.min.js')
   script(src='/js/player.js')

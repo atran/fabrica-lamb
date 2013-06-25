@@ -3,27 +3,16 @@ html
   head
     title= title
     meta(name='viewport',content='initial-scale=1.0, user-scalable=no')
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
-    link(rel='stylesheet', href='/bootstrap/css/flat-ui.css')
     link(rel='stylesheet', href='/css/style.css')
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
-    script(src='/bootstrap/js/bootstrap.min.js')
-    script(src='/socket.io/socket.io.js')
-      
+
   body
     block content
-
-    script(type='text/javascript', src='/js/vendor/underscore-min.js')
-    script(type='text/javascript', src='/js/vendor/jquery.tagsinput.js')      
-    script(type='text/javascript', src='/js/vendor/jquerypp.custom.js')      
-    script(type='text/javascript', src='/js/vendor/jquery.easing.min.js')      
-    script(type='text/javascript', src='/js/vendor/fastclick.js')
-    script(type='text/javascript', src='/js/vendor/ladda.js')        
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='/js/common.js')    
     script(type='text/javascript').
       $(function(){
         FastClick.attach(document.body);
         setTimeout(function(){window.scrollTo(0,1)},1000);
       });     
-
     block extrascripts
