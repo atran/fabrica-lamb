@@ -61,14 +61,26 @@ $ ->
   ## JSON populates HTML
   submitFields = () ->
     fields = $('.what-do-you-want').serializeJSON()
-
+    ###
+    location =
+          lat: 45.739669
+          #lat: pos.coords.latitude
+          lng: 12.267306
+          #lng: pos.coords.longitude
+    $.extend(fields, location)
+    $.get(
+      '/api/audiopts'
+      fields
+      tmplResults
+    )
+    ###
     navigator.geolocation.getCurrentPosition(
       (pos) ->
         location =
-          #lat: 45.666901 
-          lat: pos.coords.latitude
-          #lng: 12.243039 
-          lng: pos.coords.longitude
+          lat: 45.666901
+          #lat: pos.coords.latitude
+          lng: 12.243039
+          #lng: pos.coords.longitude
         $.extend(fields, location)
         $.get(
           '/api/audiopts'
@@ -76,7 +88,6 @@ $ ->
           tmplResults
         )
     )
-    
 
   tmplResults = (audiopts) ->
     $('#point-listing').empty()

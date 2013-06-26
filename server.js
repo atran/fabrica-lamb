@@ -14,7 +14,7 @@ var express = require('express')
   , crypto = require('crypto')
   , ffmpeg = require('fluent-ffmpeg');
 
-server.listen(3000);
+server.listen(80);
 
 
 /**

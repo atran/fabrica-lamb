@@ -1,4 +1,4 @@
-/*! Lamb - v0.0.0 - 2013-06-25
+/*! Lamb - v0.0.0 - 2013-06-26
 * Copyright (c) 2013 ; Licensed  */
 (function(){var r,v=Object.prototype.toString;Array.isArray=Array.isArray||function(a){return"[object Array]"==v.call(a)};var s=String.prototype.trim,l;if(s)l=function(a){return null==a?"":s.call(a)};else{var n,p;/\S/.test("\u00a0")?(n=/^[\s\xA0]+/,p=/[\s\xA0]+$/):(n=/^\s+/,p=/\s+$/);l=function(a){return null==a?"":a.toString().replace(n,"").replace(p,"")}}var w={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"},t={},u=function(){};u.prototype={otag:"{{",ctag:"}}",pragmas:{},buffer:[],pragmas_implemented:{"IMPLICIT-ITERATOR":!0},
 context:{},render:function(a,c,b,d){d||(this.context=c,this.buffer=[]);if(this.includes("",a)){a=this.render_pragmas(a);var e=this.render_section(a,c,b);!1===e&&(e=this.render_tags(a,c,b,d));if(d)return e;this.sendLines(e)}else{if(d)return a;this.send(a)}},send:function(a){""!==a&&this.buffer.push(a)},sendLines:function(a){if(a){a=a.split("\n");for(var c=0;c<a.length;c++)this.send(a[c])}},render_pragmas:function(a){if(!this.includes("%",a))return a;var c=this,b=this.getCachedRegex("render_pragmas",

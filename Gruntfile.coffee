@@ -1,5 +1,8 @@
 module.exports = (grunt) ->
   
+  # Load NPM Tasks
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
+
   # Project configuration.
   grunt.initConfig
     
@@ -7,6 +10,7 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON("package.json")
     banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\n" + "<%= pkg.homepage ? \"* \" + pkg.homepage + \"\\n\" : \"\" %>" + "* Copyright (c) <%= grunt.template.today(\"yyyy\") %> <%= pkg.author.name %>;" + " Licensed <%= _.pluck(pkg.licenses, \"type\").join(\", \") %> */\n"
     
+
     # Task configuration.
     coffee:
       compile:
@@ -44,10 +48,11 @@ module.exports = (grunt) ->
         outputStyle: "compressed"
 
     nodemon:
-      options:
-        file: 'server.js'
-        cwd: __dirname
-        ignoredFiles: ['public/**', 'src/**', 'node_modules/**','.sass-cache/**']
+      dist:
+        options:
+          file: 'server.js'
+          cwd: __dirname
+          ignoredFiles: ['public/**', 'src/**', 'node_modules/**','.sass-cache/**']
 
     concurrent:
       target:
@@ -60,15 +65,6 @@ module.exports = (grunt) ->
       tasks: "generate"
       options:
         livereload: true
-  
-  # These plugins provide necessary tasks.
-  grunt.loadNpmTasks "grunt-contrib-coffee"
-  grunt.loadNpmTasks "grunt-contrib-concat"
-  grunt.loadNpmTasks "grunt-contrib-uglify"
-  grunt.loadNpmTasks "grunt-contrib-compass"
-  grunt.loadNpmTasks "grunt-nodemon"
-  grunt.loadNpmTasks "grunt-concurrent"
-  grunt.loadNpmTasks "grunt-contrib-watch"
   
   # Default task.
   grunt.registerTask "default", ["concurrent:target"]

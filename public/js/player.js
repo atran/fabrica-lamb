@@ -55,10 +55,24 @@
     submitFields = function() {
       var fields;
       fields = $('.what-do-you-want').serializeJSON();
+      /*
+      location =
+            lat: 45.739669
+            #lat: pos.coords.latitude
+            lng: 12.267306
+            #lng: pos.coords.longitude
+      $.extend(fields, location)
+      $.get(
+        '/api/audiopts'
+        fields
+        tmplResults
+      )
+      */
+
       return navigator.geolocation.getCurrentPosition(function(pos) {
         location = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
+          lat: 45.666901,
+          lng: 12.243039
         };
         $.extend(fields, location);
         return $.get('/api/audiopts', fields, tmplResults);
