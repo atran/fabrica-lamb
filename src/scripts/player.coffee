@@ -77,10 +77,10 @@ $ ->
     navigator.geolocation.getCurrentPosition(
       (pos) ->
         location =
-          lat: 45.666901
-          #lat: pos.coords.latitude
-          lng: 12.243039
-          #lng: pos.coords.longitude
+          #lat: 45.666901
+          lat: pos.coords.latitude
+          #lng: 12.243039
+          lng: pos.coords.longitude
         $.extend(fields, location)
         $.get(
           '/api/audiopts'

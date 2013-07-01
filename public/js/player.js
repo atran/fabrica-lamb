@@ -71,8 +71,8 @@
 
       return navigator.geolocation.getCurrentPosition(function(pos) {
         location = {
-          lat: 45.666901,
-          lng: 12.243039
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
         };
         $.extend(fields, location);
         return $.get('/api/audiopts', fields, tmplResults);
