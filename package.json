@@ -8,7 +8,9 @@
     "express": "latest",
     "fluent-ffmpeg": "latest",
     "jade": "latest",
-    "underscore": "latest"
+    "underscore": "latest",
+    "body-parser":"latest",
+    "express-method-override":"latest"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
