@@ -3,14 +3,12 @@
   "version": "0.0.0",
   "description": "Location-based, user-generated audio mosaic.",
   "dependencies": {
-    "mongoose": "latest",
+    "mongoose": "~3.8.8",
     "socket.io": "latest",
-    "express": "latest",
+    "express": "~3.5.0",
     "fluent-ffmpeg": "latest",
     "jade": "latest",
-    "underscore": "latest",
-    "body-parser":"latest",
-    "express-method-override":"latest"
+    "underscore": "latest"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

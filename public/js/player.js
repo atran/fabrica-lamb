@@ -70,11 +70,7 @@
       */
 
       return navigator.geolocation.getCurrentPosition(function(pos) {
-        location = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
-        };
-        $.extend(fields, location);
+        location = $.extend(fields, location);
         return $.get('/api/audiopts', fields, tmplResults);
       });
     };

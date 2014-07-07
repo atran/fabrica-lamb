@@ -12,11 +12,9 @@ var express = require('express')
   , _ = require('underscore')
   , jade = require('jade')
   , crypto = require('crypto')
-  , ffmpeg = require('fluent-ffmpeg')
-  , bodyParser = require('body-parser')
-  , methodOverride = require('express-method-override');
+  , ffmpeg = require('fluent-ffmpeg');
 
-server.listen(8080);
+server.listen(8081);
 
 
 /**
@@ -39,14 +37,14 @@ var AudioPt = mongoose.model('AudioPoint', audioPtSchema);
 /**
 * config server
 */
-
-
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
-app.use(bodyParser());
-app.use(methodOverride());
-app.use(express.static(__dirname + '/public'));
-io.set('log level', 1);
+app.configure(function(){
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.static(__dirname + '/public'));
+  io.set('log level', 1);
+});
 
 
 /**

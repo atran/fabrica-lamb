@@ -30,10 +30,11 @@ $ ->
   update_map = (pos) ->
     $('#gmap').removeClass 'hidden'
 
-    $('.lat').attr 'value', pos.coords.latitude
-    $('.lng').attr 'value', pos.coords.longitude
+    $('.lat').attr 'value', pos.coords.latitude #45.737366
+    $('.lng').attr 'value', pos.coords.longitude #12.266482
 
     loc = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude)
+    #loc = new google.maps.LatLng(45.737366, 12.266482)
     map = new google.maps.Map(
       document.getElementById("gmap"),
       (
